@@ -46,15 +46,6 @@ const cats = [
 
 // octopus
 
-function updateCounter() {
-  cats.forEach((cat) => {
-    if ($catImg.alt === cat.alt) {
-      cat.counter++;
-      $catCounter.innerHTML = cat.counter;
-    }
-  });
-}
-
 function init() {
   cats.forEach((cat) => {
     let $listItem = document.createElement('li');
@@ -67,6 +58,15 @@ function init() {
       $catImg.src = cat.src;
       $catImg.alt = cat.alt;
     });
+  });
+}
+
+function updateCounter() {
+  cats.forEach((cat) => {
+    if ($catImg.alt === cat.alt) {
+      cat.counter++;
+      $catCounter.innerHTML = cat.counter;
+    }
   });
 }
 
