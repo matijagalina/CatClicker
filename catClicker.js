@@ -1,9 +1,15 @@
+//view
+
 const $imgContainer = document.querySelector('.img_container');
 const $catList = document.querySelector('#catList');
 
 let $catTitle = document.querySelector('#catContainer h3');
 let $catImg = document.querySelector('#catContainer img');
 let $catCounter = document.querySelector('#catContainer p');
+
+$catImg.addEventListener('click', updateCounter);
+
+// model
 
 const cats = [
   {
@@ -38,24 +44,30 @@ const cats = [
   }
 ];
 
-cats.forEach((cat) => {
-  let $listItem = document.createElement('li');
-  $listItem.innerHTML = cat.name;
-  $catList.appendChild($listItem);
+// octopus
 
-  $listItem.addEventListener('click', () => {
-    $catCounter.innerHTML = cat.counter;
-    $catTitle.innerHTML = cat.name;
-    $catImg.src = cat.src;
-    $catImg.alt = cat.alt;
-  });
-});
-
-$catImg.addEventListener('click', () => {
+function updateCounter() {
   cats.forEach((cat) => {
     if ($catImg.alt === cat.alt) {
       cat.counter++;
       $catCounter.innerHTML = cat.counter;
     }
   });
-});
+}
+
+function init() {
+  cats.forEach((cat) => {
+    let $listItem = document.createElement('li');
+    $listItem.innerHTML = cat.name;
+    $catList.appendChild($listItem);
+
+    $listItem.addEventListener('click', () => {
+      $catCounter.innerHTML = cat.counter;
+      $catTitle.innerHTML = cat.name;
+      $catImg.src = cat.src;
+      $catImg.alt = cat.alt;
+    });
+  });
+}
+
+init();
