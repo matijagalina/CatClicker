@@ -1,15 +1,4 @@
-//view
-
-const $imgContainer = document.querySelector('.img_container');
-const $catList = document.querySelector('#catList');
-
-let $catTitle = document.querySelector('#catContainer h3');
-let $catImg = document.querySelector('#catContainer img');
-let $catCounter = document.querySelector('#catContainer p');
-
-$catImg.addEventListener('click', updateCounter);
-
-// model
+// ------------  model  ----------------------------------------
 
 const cats = [
   {
@@ -44,7 +33,44 @@ const cats = [
   }
 ];
 
-// octopus
+// ---------------  view ---------------------------------------------
+
+const $imgContainer = document.querySelector('.img_container');
+const $catList = document.querySelector('#catList');
+let $catTitle = document.querySelector('#catContainer h3');
+let $catImg = document.querySelector('#catContainer img');
+let $catCounter = document.querySelector('#catContainer p');
+const $adminBtn = document.querySelector('#adminBtn');
+const $adminCancel = document.querySelector('#adminCancel');
+const $adminSave = document.querySelector('#adminSave');
+const $adminAside = document.querySelector('#adminAside');
+const $catName = document.querySelector('#catName');
+const $catSrc = document.querySelector('#catSrc');
+const $catCount = document.querySelector('#catCounter');
+
+function showAdmin() {
+  if ($adminAside.style.display = 'none') {
+    $adminAside.style.display = 'block';
+  }
+}
+
+function hideAdmin() {
+  if ($adminAside.style.display = 'block') {
+    $adminAside.style.display = 'none';
+  }
+}
+
+$catImg.addEventListener('click', updateCounter);
+
+$adminBtn.addEventListener('click', function () {
+  showAdmin();
+  fillAdminFields();
+});
+
+$adminCancel.addEventListener('click', hideAdmin);
+$adminSave.addEventListener('click', handleCatUpdate);
+
+// -----------------  octopus  -----------------------------------------
 
 function init() {
   cats.forEach((cat) => {
@@ -57,6 +83,7 @@ function init() {
       $catTitle.innerHTML = cat.name;
       $catImg.src = cat.src;
       $catImg.alt = cat.alt;
+      fillAdminFields();
     });
   });
 }
@@ -66,6 +93,33 @@ function updateCounter() {
     if ($catImg.alt === cat.alt) {
       cat.counter++;
       $catCounter.innerHTML = cat.counter;
+      fillAdminFields();
+    }
+  });
+}
+
+function fillAdminFields() {
+  $catName.value = $catTitle.innerHTML;
+  $catSrc.value = $catImg.src;
+  $catCount.value = $catCounter.innerHTML;
+}
+
+function handleCatUpdate() {
+  cats.forEach((cat) => {
+    if ($catImg.alt === cat.alt) {
+      // update model
+      cat.name = $catName.value;
+      cat.src = $catSrc.value;
+      cat.counter = $catCount.value;
+      // update view
+      $catCounter.innerHTML = cat.counter;
+      $catTitle.innerHTML = cat.name;
+      $catImg.src = cat.src;
+      if (!!$catList) {
+        while ($catList.firstChild) { $catList.firstChild.remove(); }
+      }
+      init();
+      hideAdmin();
     }
   });
 }
