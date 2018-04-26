@@ -60,6 +60,12 @@ function hideAdmin() {
   }
 }
 
+function removeCatList() {
+  if (!!$catList) {
+    while ($catList.firstChild) { $catList.firstChild.remove(); }
+  }
+}
+
 $catImg.addEventListener('click', updateCounter);
 
 $adminBtn.addEventListener('click', function () {
@@ -115,9 +121,7 @@ function handleCatUpdate() {
       $catCounter.innerHTML = cat.counter;
       $catTitle.innerHTML = cat.name;
       $catImg.src = cat.src;
-      if (!!$catList) {
-        while ($catList.firstChild) { $catList.firstChild.remove(); }
-      }
+      removeCatList();
       init();
       hideAdmin();
     }
